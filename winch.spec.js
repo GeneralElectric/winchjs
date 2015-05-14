@@ -575,10 +575,6 @@ describe('winchJS Unit Tests', function() {
       expect($scope.imgLoaded).to.have.been.called();
     });
 
-    it('should call imgLoaded only if a function', function() {
-//TODO
-    });
-
     it('should only process loadSelf once', function() {
       $scope.imgLoaded = chai.spy(function() {
       });
