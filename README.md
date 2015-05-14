@@ -20,7 +20,7 @@ Example:
 ```
 
 ### Testing ###
-Winch has a full test quite.  If you want to submit a pull request make sure the test suite passes or is updated.
+Winch has a full test suite.  If you want to submit a pull request make sure the test suite passes or is updated.
 
 
 Run:
