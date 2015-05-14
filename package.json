@@ -29,5 +29,15 @@
   },
   "scripts": {
     "test": "node node_modules/karma/bin/karma start karma.conf.js"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/GeneralElectric/winchjs/issues"
+  },
+  "homepage": "https://github.com/GeneralElectric/winchjs",
+  "main": "winch.js",
+  "directories": {
+    "example": "example"
+  },
+  "author": "Sean Cady <sean.cady@ge.com>",
+  "license": "MIT"
 }
