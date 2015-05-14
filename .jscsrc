@@ -1,0 +1,7 @@
+{
+  "preset": "google",
+  "maximumLineLength":{
+    "value":120
+  },
+  "disallowMultipleVarDecl":null
+}

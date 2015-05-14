@@ -1,0 +1,33 @@
+{
+  "name": "winchjs",
+  "version": "1.1.0",
+  "authors": [
+    "Sean Cady <sean.cady@ge.com>"
+  ],
+  "keywords": [],
+  "description": "Image lazy loading plugin for AngularJS",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.corporate.ge.com:asgard/sigiljs.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "chai-spies": "^0.5.1",
+    "grunt": "0.4.x",
+    "grunt-contrib-connect": "0.7.x",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-jscs": "^1.6.0",
+    "karma": "^0.12.31",
+    "karma-coverage": "^0.3.1",
+    "karma-mocha": "^0.1.10",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "mocha": "^2.2.4"
+  },
+  "engines": {
+    "node": ">= 0.8.26"
+  },
+  "scripts": {
+    "test": "node node_modules/karma/bin/karma start karma.conf.js"
+  }
+}

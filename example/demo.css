@@ -1,0 +1,53 @@
+.content-scroll {
+    max-height: 500px;
+    background: #DDD;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.content-translate {
+    height: 500px;
+    background: #DDD;
+    overflow: hidden;
+}
+
+.push-down {
+    margin-top: 1000px;
+    margin-bottom: 1000px;
+}
+
+.hscroll{
+    height: 500px;
+    overflow-x:scroll;
+    overflow-y:hidden;
+}
+
+.horizontal > *{
+    display: inline;
+}
+
+.horizontal {
+    background: #DDD;
+    width: 3000px;
+}
+
+.winch-img-not-loaded {
+    display: inline-block;
+    background-color: #F00;
+    width: 50px;
+    height: 50px;
+}
+.content-translate{
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+    height:3000px;
+}
+.translate{
+    overflow:hidden;
+    height: 500px;
+}
+.test-load-class{
+    border: 5px solid #F00;
+}
