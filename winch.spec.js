@@ -617,7 +617,7 @@ describe('winchJS Unit Tests', function() {
       expect(mockwinchFactory.loadImage).to.have.been.called();
     });
 
-    it('should load allow function for image source', function() {
+    it('should load allow expression function for image source', function() {
       html = '<div winch-img img-url="imgFnParent()"></div>';
 
       $scope.imgFnParent = function() {
@@ -631,6 +631,32 @@ describe('winchJS Unit Tests', function() {
       $scope.$digest();
 
       expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200?text=Dynamic');
+    });
+
+    it('should load allow expression value for image source', function() {
+      html = '<div winch-img img-url="imgFnParent"></div>';
+
+      $scope.imgFnParent = 'http://placehold.it/200x200?text=Dynamic2';
+
+      element = compile(html, $scope);
+      isolateScope = element.isolateScope();
+
+      isolateScope.loadSelf();
+      $scope.$digest();
+
+      expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200?text=Dynamic2');
+    });
+
+    it('should handle incorrect dynamic expression for image source', function() {
+      html = '<div winch-img img-url="imgFnParent" img-src="http://placehold.it/200x200?text=BadExpression"></div>';
+
+      element = compile(html, $scope);
+      isolateScope = element.isolateScope();
+
+      isolateScope.loadSelf();
+      $scope.$digest();
+
+      expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200?text=BadExpression');
     })
   });
 
