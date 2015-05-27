@@ -179,8 +179,8 @@ angular.module('winch', [])
  * <winch-img img-src="awesome2.jpg"></winch-img>
  * <winch-img data-img-src="awesome3.jpg" data-img-loaded="imageLoadedCallback"></winch-img>
  */
-  .directive('winchImg', ['$compile', 'winchFactory',
-    function($compile, winchFactory) {
+  .directive('winchImg', ['$compile', '$timeout', 'winchFactory',
+    function($compile, $timeout, winchFactory) {
       return {
         priority: 0,
         restrict: 'AE',
@@ -197,11 +197,19 @@ angular.module('winch', [])
           /**
            * Register self in factory, if it fails 5 times load self
            */
-          scope.registerImg = function() {
-            winchFactory.registerImg(
-              scope.getImgURL(),
-              scope.loadSelf,
-              scope.isVisible);
+          scope.registerImg = function(attempt) {
+            if (!winchFactory.registerImg(
+                scope.getImgURL(),
+                scope.loadSelf,
+                scope.isVisible)) {
+              if (attempt < 5) {
+                $timeout(function() {
+                  scope.registerImg(attempt + 1);
+                }, 1000);
+              } else {
+                scope.loadSelf();
+              }
+            }
           };
 
           /**
@@ -287,6 +295,9 @@ angular.module('winch', [])
               if (scope.imgLoaded && typeof scope.imgLoaded === 'function') {
                 scope.imgLoaded();
               }
+              $timeout(function() {
+                scope.$destroy();
+              }, 100);
             }
           };
 
@@ -320,7 +331,7 @@ angular.module('winch', [])
           });
 
           //Register image to start loading process
-          scope.registerImg();
+          scope.registerImg(0);
         }
       };
     }])
