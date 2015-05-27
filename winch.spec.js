@@ -444,7 +444,7 @@ describe('winchJS Unit Tests', function() {
     }));
 
     beforeEach(function() {
-      html = angular.element('<div winch-img image-src="http://placehold.it/200x200"></div>');
+      html = angular.element('<div winch-img img-src="http://placehold.it/200x200"></div>');
     });
 
     /**
@@ -550,7 +550,7 @@ describe('winchJS Unit Tests', function() {
     });
 
     it('should add css class on image load if defined', function() {
-      html = '<div winch-img image-src="http://placehold.it/200x200" data-winch-img-class="test-load-class"></div>';
+      html = '<div winch-img img-src="http://placehold.it/200x200" data-winch-img-class="test-load-class"></div>';
       element = compile(html, $scope);
       isolateScope = element.isolateScope();
 
@@ -564,7 +564,7 @@ describe('winchJS Unit Tests', function() {
       $scope.imgLoaded = chai.spy(function() {
       });
 
-      html = '<div winch-img image-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
+      html = '<div winch-img img-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
 
       element = compile(html, $scope);
       isolateScope = element.isolateScope();
@@ -579,7 +579,7 @@ describe('winchJS Unit Tests', function() {
       $scope.imgLoaded = chai.spy(function() {
       });
 
-      html = '<div winch-img image-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
+      html = '<div winch-img img-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
 
       element = compile(html, $scope);
       isolateScope = element.isolateScope();
@@ -812,7 +812,7 @@ describe('winchJS Unit Tests', function() {
 
     it('should handle ng-src', function() {
       expect($filter('winchify')('<img data-ng-src="http://foobar.com/image.png">')).to.be
-        .equal('<winch-img data-image-src="http://foobar.com/image.png"></winch-img>')
+        .equal('<winch-img data-img-src="http://foobar.com/image.png"></winch-img>')
     })
   });
 });

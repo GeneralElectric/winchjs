@@ -176,8 +176,8 @@ angular.module('winch', [])
  * Ex:
  * <winch-img src="http://placehold.it/350x150"></winch-img>
  * <winch-img data-src="awesome.jpg"></winch-img>
- * <winch-img image-src="awesome2.jpg"></winch-img>
- * <winch-img data-image-src="awesome3.jpg" data-img-loaded="imageLoadedCallback"></winch-img>
+ * <winch-img img-src="awesome2.jpg"></winch-img>
+ * <winch-img data-img-src="awesome3.jpg" data-img-loaded="imageLoadedCallback"></winch-img>
  */
   .directive('winchImg', ['$compile', 'winchFactory',
     function($compile, winchFactory) {
@@ -302,10 +302,10 @@ angular.module('winch', [])
            * Get image URL
            */
           scope.getImgURL = function() {
-            if (scope.imgUrl()) {
+            if (scope.imgUrl && typeof scope.imgUrl() !== 'undefined') {
               return scope.imgUrl();
             }
-            return attr.src || attr.imageSrc;
+            return attr.src || attr.imgSrc;
           };
 
           /**
@@ -562,7 +562,7 @@ angular.module('winch', [])
       if (html.search(openRgx) > -1) { //Verify there is an image tag
         html = addCloseImg(html)
           .replace(openRgx, '<winch-img')
-          .replace(ngSrcRgx, 'image-src')
+          .replace(ngSrcRgx, 'img-src')
           .replace(closeRgx, '</winch-img>');
 
         return html;
