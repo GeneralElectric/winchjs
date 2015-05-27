@@ -616,6 +616,22 @@ describe('winchJS Unit Tests', function() {
       expect(isolateScope.loadSelf).to.have.been.called();
       expect(mockwinchFactory.loadImage).to.have.been.called();
     });
+
+    it('should load allow function for image source', function() {
+      html = '<div winch-img img-url="imgFnParent()"></div>';
+
+      $scope.imgFnParent = function() {
+        return 'http://placehold.it/200x200?text=Dynamic'
+      };
+
+      element = compile(html, $scope);
+      isolateScope = element.isolateScope();
+
+      isolateScope.loadSelf();
+      $scope.$digest();
+
+      expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200?text=Dynamic');
+    })
   });
 
   describe('Scroll Trigger Directive', function() {

@@ -185,6 +185,7 @@ angular.module('winch', [])
         priority: 0,
         restrict: 'AE',
         scope: {
+          imgUrl: '&',
           imgLoaded: '&'
         },
         link: function(scope, elem, attr) {
@@ -301,6 +302,9 @@ angular.module('winch', [])
            * Get image URL
            */
           scope.getImgURL = function() {
+            if (scope.imgUrl()) {
+              return scope.imgUrl();
+            }
             return attr.src || attr.imageSrc;
           };
 
