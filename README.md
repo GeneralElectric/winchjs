@@ -1,4 +1,4 @@
-# WinchJS [![Build Status](https://travis-ci.org/GeneralElectric/winchjs.svg?branch=master)](https://travis-ci.org/GeneralElectric/winchjs)
+# WinchJS [![Build Status](https://travis-ci.org/GeneralElectric/winchjs.svg?branch=master)](https://travis-ci.org/GeneralElectric/winchjs) [![Test Coverage](https://codeclimate.com/github/GeneralElectric/winchjs/badges/coverage.svg)](https://codeclimate.com/github/GeneralElectric/winchjs/coverage)
 
 This is a lazy image loader written for AngularJS.
 
