@@ -631,11 +631,23 @@ describe('winchJS Unit Tests', function() {
 
       element = compile(html, $scope);
       isolateScope = element.isolateScope();
+      expect($scope.imgLoaded).not.to.have.been.called();
 
       isolateScope.loadSelf();
       $scope.$digest();
 
       expect($scope.imgLoaded).to.have.been.called();
+    });
+
+    it('should handle incorrect imgLoaded callback', function() {
+      $scope.imgLoaded = function(){throw new Error('Test Error')};
+
+      html = '<div winch-img img-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
+
+      element = compile(html, $scope);
+      isolateScope = element.isolateScope();
+
+      expect(isolateScope.loadSelf).to.not.throw(Error);
     });
 
     it('should only process loadSelf once', function() {

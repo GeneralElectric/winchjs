@@ -292,9 +292,12 @@ angular.module('winch', [])
               }
               elem.empty().append(img);
               scope._isLoaded = true;
-              if (scope.imgLoaded && typeof scope.imgLoaded === 'function') {
+              try {
                 scope.imgLoaded();
+              } catch (e) {
+                //Eat error
               }
+
               $timeout(function() {
                 scope.$destroy();
               }, 100);
