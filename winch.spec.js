@@ -567,7 +567,7 @@ describe('winchJS Unit Tests', function() {
       isolateScope.loadSelf();
       $scope.$digest();
 
-      isolateScope.$on('$destroy',function(){
+      isolateScope.$on('$destroy', function() {
         expect(true).to.be.true;
         done();
       });
@@ -656,7 +656,9 @@ describe('winchJS Unit Tests', function() {
     });
 
     it('should handle incorrect imgLoaded callback', function() {
-      $scope.imgLoaded = function(){throw new Error('Test Error')};
+      $scope.imgLoaded = function() {
+        throw new Error('Test Error')
+      };
 
       html = '<div winch-img img-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
 
