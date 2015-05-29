@@ -59,8 +59,8 @@ angular.module('winch', [])
            */
           function setWindowView() {
             winchFactory.setWindowView(
-              $window.innerHeight || $window.document.documentElement.clientHeight,
-              $window.innerWidth || $window.document.documentElement.clientWidth
+              $window.innerHeight,
+              $window.innerWidth
             );
           }
 
