@@ -444,7 +444,7 @@ describe('winchJS Unit Tests', function() {
     }));
 
     beforeEach(function() {
-      html = angular.element('<div winch-img image-src="http://placehold.it/200x200"></div>');
+      html = angular.element('<div winch-img img-src="http://placehold.it/200x200"></div>');
     });
 
     /**
@@ -484,6 +484,69 @@ describe('winchJS Unit Tests', function() {
     it('should register itself image on load', function() {
       element = compile(html, $scope);
       expect(mockwinchFactory.registerImg).to.have.been.called();
+    });
+
+    it('should make five attempts to register before loading self', function() {
+      var status = false, url = '';
+      mockwinchFactory.registerImg = chai.spy(function() {
+        return status;
+      });
+
+      $scope.getUrl = function() {
+        return url;
+      };
+
+      html = angular.element('<div winch-img img-fn="getUrl()"></div>');
+
+      element = compile(html, $scope);
+      element.isolateScope().loadSelf = chai.spy(element.isolateScope().loadSelf);
+
+      //First Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(1);
+      $timeout.flush(999);
+      //100 MS not completed
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(1);
+      $timeout.flush();
+      //Second Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(2);
+      $timeout.flush();
+      //Third Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(3);
+      $timeout.flush();
+      //Forth Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(4);
+      $timeout.flush();
+      //Fifth Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(5);
+      expect(element.isolateScope().loadSelf).to.have.been.called.once();
+    });
+
+    it('should register after dynamic value resolves (before 5 attempts)', function() {
+      var status = false, url = '';
+      mockwinchFactory.registerImg = chai.spy(function() {
+        return status;
+      });
+
+      $scope.getUrl = function() {
+        return url;
+      };
+
+      html = angular.element('<div winch-img img-fn="getUrl()"></div>');
+
+      element = compile(html, $scope);
+      element.isolateScope().loadSelf = chai.spy(element.isolateScope().loadSelf);
+
+      //First Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(1);
+      $timeout.flush();
+      //Second Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(2);
+      url = 'http://placehold.it/200x200';
+      status = true;
+      $timeout.flush();
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(3);
+      //No new delay timer should be allocated
+      $timeout.verifyNoPendingTasks();
     });
 
     it('should load image on loadSelf()', function() {
@@ -550,7 +613,7 @@ describe('winchJS Unit Tests', function() {
     });
 
     it('should add css class on image load if defined', function() {
-      html = '<div winch-img image-src="http://placehold.it/200x200" data-winch-img-class="test-load-class"></div>';
+      html = '<div winch-img img-src="http://placehold.it/200x200" data-winch-img-class="test-load-class"></div>';
       element = compile(html, $scope);
       isolateScope = element.isolateScope();
 
@@ -564,7 +627,7 @@ describe('winchJS Unit Tests', function() {
       $scope.imgLoaded = chai.spy(function() {
       });
 
-      html = '<div winch-img image-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
+      html = '<div winch-img img-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
 
       element = compile(html, $scope);
       isolateScope = element.isolateScope();
@@ -579,7 +642,7 @@ describe('winchJS Unit Tests', function() {
       $scope.imgLoaded = chai.spy(function() {
       });
 
-      html = '<div winch-img image-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
+      html = '<div winch-img img-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
 
       element = compile(html, $scope);
       isolateScope = element.isolateScope();
@@ -616,6 +679,48 @@ describe('winchJS Unit Tests', function() {
       expect(isolateScope.loadSelf).to.have.been.called();
       expect(mockwinchFactory.loadImage).to.have.been.called();
     });
+
+    it('should load allow expression function for image source', function() {
+      html = '<div winch-img img-url="imgFnParent()"></div>';
+
+      $scope.imgFnParent = function() {
+        return 'http://placehold.it/200x200?text=Dynamic'
+      };
+
+      element = compile(html, $scope);
+      isolateScope = element.isolateScope();
+
+      isolateScope.loadSelf();
+      $scope.$digest();
+
+      expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200?text=Dynamic');
+    });
+
+    it('should load allow expression value for image source', function() {
+      html = '<div winch-img img-url="imgFnParent"></div>';
+
+      $scope.imgFnParent = 'http://placehold.it/200x200?text=Dynamic2';
+
+      element = compile(html, $scope);
+      isolateScope = element.isolateScope();
+
+      isolateScope.loadSelf();
+      $scope.$digest();
+
+      expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200?text=Dynamic2');
+    });
+
+    it('should handle incorrect dynamic expression for image source', function() {
+      html = '<div winch-img img-url="imgFnParent" img-src="http://placehold.it/200x200?text=BadExpression"></div>';
+
+      element = compile(html, $scope);
+      isolateScope = element.isolateScope();
+
+      isolateScope.loadSelf();
+      $scope.$digest();
+
+      expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200?text=BadExpression');
+    })
   });
 
   describe('Scroll Trigger Directive', function() {
@@ -796,7 +901,7 @@ describe('winchJS Unit Tests', function() {
 
     it('should handle ng-src', function() {
       expect($filter('winchify')('<img data-ng-src="http://foobar.com/image.png">')).to.be
-        .equal('<winch-img data-image-src="http://foobar.com/image.png"></winch-img>')
+        .equal('<winch-img data-img-src="http://foobar.com/image.png"></winch-img>')
     })
   });
 });

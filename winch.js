@@ -176,15 +176,16 @@ angular.module('winch', [])
  * Ex:
  * <winch-img src="http://placehold.it/350x150"></winch-img>
  * <winch-img data-src="awesome.jpg"></winch-img>
- * <winch-img image-src="awesome2.jpg"></winch-img>
- * <winch-img data-image-src="awesome3.jpg" data-img-loaded="imageLoadedCallback"></winch-img>
+ * <winch-img img-src="awesome2.jpg"></winch-img>
+ * <winch-img data-img-src="awesome3.jpg" data-img-loaded="imageLoadedCallback"></winch-img>
  */
-  .directive('winchImg', ['$compile', 'winchFactory',
-    function($compile, winchFactory) {
+  .directive('winchImg', ['$compile', '$timeout', 'winchFactory',
+    function($compile, $timeout, winchFactory) {
       return {
         priority: 0,
         restrict: 'AE',
         scope: {
+          imgUrl: '&',
           imgLoaded: '&'
         },
         link: function(scope, elem, attr) {
@@ -196,11 +197,19 @@ angular.module('winch', [])
           /**
            * Register self in factory, if it fails 5 times load self
            */
-          scope.registerImg = function() {
-            winchFactory.registerImg(
-              scope.getImgURL(),
-              scope.loadSelf,
-              scope.isVisible);
+          scope.registerImg = function(attempt) {
+            if (!winchFactory.registerImg(
+                scope.getImgURL(),
+                scope.loadSelf,
+                scope.isVisible)) {
+              if (attempt < 5) {
+                $timeout(function() {
+                  scope.registerImg(attempt + 1);
+                }, 1000);
+              } else {
+                scope.loadSelf();
+              }
+            }
           };
 
           /**
@@ -286,6 +295,9 @@ angular.module('winch', [])
               if (scope.imgLoaded && typeof scope.imgLoaded === 'function') {
                 scope.imgLoaded();
               }
+              $timeout(function() {
+                scope.$destroy();
+              }, 100);
             }
           };
 
@@ -301,7 +313,10 @@ angular.module('winch', [])
            * Get image URL
            */
           scope.getImgURL = function() {
-            return attr.src || attr.imageSrc;
+            if (scope.imgUrl && typeof scope.imgUrl() !== 'undefined') {
+              return scope.imgUrl();
+            }
+            return attr.src || attr.imgSrc;
           };
 
           /**
@@ -316,7 +331,7 @@ angular.module('winch', [])
           });
 
           //Register image to start loading process
-          scope.registerImg();
+          scope.registerImg(0);
         }
       };
     }])
@@ -558,7 +573,7 @@ angular.module('winch', [])
       if (html.search(openRgx) > -1) { //Verify there is an image tag
         html = addCloseImg(html)
           .replace(openRgx, '<winch-img')
-          .replace(ngSrcRgx, 'image-src')
+          .replace(ngSrcRgx, 'img-src')
           .replace(closeRgx, '</winch-img>');
 
         return html;

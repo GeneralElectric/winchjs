@@ -70,6 +70,20 @@ angular.module('DemoHelper', ['winch'])
       }
     };
   }])
+  .directive('demoDynamic',[function(){
+    return {
+      link: function(scope){
+        scope.getUrl = function(val){
+          if(val){
+            return 'http://placehold.it/350x150&text=' + val
+          }else{
+            return 'http://placehold.it/350x150&text=' + new Date().getTime();
+          }
+        };
+        scope.getUrlExp = 'http://placehold.it/350x150&text=expression'
+      }
+    }
+  }])
   .service('translateService', function() {
     var currentPositionX = 0,
       currentPositionY = 0;
