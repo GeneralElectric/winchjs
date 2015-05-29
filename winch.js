@@ -1,7 +1,9 @@
+/* global angular: false */
 /**
- * winch
+ * WinchJS
  *
  * This is designed to lazy load images in an AngularJS application
+ * Written by Sean Cady
  */
 angular.module('winch', [])
 /**
@@ -24,7 +26,7 @@ angular.module('winch', [])
             attr.winchMaster.split(',').forEach(function(selector) {
               elems = $window.document.querySelectorAll(selector);
               for (index = 0; index < elems.length; index += 1) {
-                scope._scrollObjects.push(angular.element(elems[index]))
+                scope._scrollObjects.push(angular.element(elems[index]));
               }
             });
           }
@@ -137,7 +139,7 @@ angular.module('winch', [])
                 selectors.forEach(function(selector) {
                   elems = elem[0].querySelectorAll(selector);
                   for (index = 0; index < elems.length; index += 1) {
-                    scope._scrollObjects.push(angular.element(elems[index]))
+                    scope._scrollObjects.push(angular.element(elems[index]));
                   }
                 });
               } catch (e) {

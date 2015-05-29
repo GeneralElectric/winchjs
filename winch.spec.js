@@ -1,6 +1,7 @@
 /* jshint mocha: true*/
 /* global chai: false */
 /* global inject: false */
+/* global angular: false */
 
 /**
  *
@@ -42,8 +43,8 @@ describe('winchJS Unit Tests', function() {
 
       winchFactory.registerImg(testUrl, fnLoad, fnValidate);
 
-      expect(winchFactory._img.hasOwnProperty(testUrl)).to.be.true;
-      expect(winchFactory._img[testUrl].loaded).to.be.false;
+      expect(winchFactory._img.hasOwnProperty(testUrl)).to.be.equal(true);
+      expect(winchFactory._img[testUrl].loaded).to.be.equal(false);
       expect(winchFactory._img[testUrl].fnLoad[0]).to.be.equal(fnLoad);
       expect(winchFactory._img[testUrl].fnValidate[0]).to.be.equal(fnValidate);
 
@@ -74,25 +75,25 @@ describe('winchJS Unit Tests', function() {
     });
 
     it('should enforce data type requirements for registering and image', function() {
-      expect(winchFactory.registerImg()).to.be.false;
-      expect(winchFactory.registerImg('test')).to.be.false;
+      expect(winchFactory.registerImg()).to.be.equal(false);
+      expect(winchFactory.registerImg('test')).to.be.equal(false);
       expect(winchFactory.registerImg('test',
         function() {
         }
-      )).to.be.false;
+      )).to.be.equal(false);
       expect(winchFactory.registerImg({},
         function() {
         },
         function() {
         }
-      )).to.be.false;
+      )).to.be.equal(false);
       expect(winchFactory.registerImg({}, 'test',
         function() {
         }
-      )).to.be.false;
+      )).to.be.equal(false);
       expect(winchFactory.registerImg({},
         function() {
-        }, 'test')).to.be.false;
+        }, 'test')).to.be.equal(false);
     });
 
     it('should set and get window dimensions', function() {
@@ -255,7 +256,7 @@ describe('winchJS Unit Tests', function() {
 
     it('should handle incorrect function', function(done) {
       Throttle.throttle('test', 100).then(function() {
-        expect(true).to.be.false;
+        expect(true).to.be.equal(false);
         done();
       }, function(error) {
         expect(error).to.equal('Not a Function');
@@ -286,11 +287,11 @@ describe('winchJS Unit Tests', function() {
 
       // Register our factories
       $provide.factory('winchFactory', function() {
-        return mockwinchFactory
+        return mockwinchFactory;
       });
 
       $provide.service('Throttle', function() {
-        return mockThrottle
+        return mockThrottle;
       });
     }));
 
@@ -421,7 +422,7 @@ describe('winchJS Unit Tests', function() {
 
       mockwinchFactory = {
         getMasterBox: chai.spy(function() {
-          return boundingBox
+          return boundingBox;
         }),
         loadImage: chai.spy(function() {
         }),
@@ -432,7 +433,7 @@ describe('winchJS Unit Tests', function() {
 
       // Register our factories
       $provide.factory('winchFactory', function() {
-        return mockwinchFactory
+        return mockwinchFactory;
       });
     }));
 
@@ -468,7 +469,7 @@ describe('winchJS Unit Tests', function() {
       expect(isolateScope.getImgURL).to.be.a('function');
 
       expect(isolateScope.getImgURL()).to.be.equal('http://placehold.it/200x200');
-      expect(element.hasClass('winch-img-not-loaded')).to.be.true;
+      expect(element.hasClass('winch-img-not-loaded')).to.be.equal(true);
 
       //Should be all zero in testing
       expect(isolateScope.boundingBox()).to.be.deep.equal({
@@ -556,7 +557,7 @@ describe('winchJS Unit Tests', function() {
       isolateScope.loadSelf();
       $scope.$digest();
 
-      expect(isolateScope._isLoaded).to.be.true;
+      expect(isolateScope._isLoaded).to.be.equal(true);
       expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200');
     });
 
@@ -568,7 +569,7 @@ describe('winchJS Unit Tests', function() {
       $scope.$digest();
 
       isolateScope.$on('$destroy', function() {
-        expect(true).to.be.true;
+        expect(true).to.be.equal(true);
         done();
       });
 
@@ -657,7 +658,7 @@ describe('winchJS Unit Tests', function() {
 
     it('should handle incorrect imgLoaded callback', function() {
       $scope.imgLoaded = function() {
-        throw new Error('Test Error')
+        throw new Error('Test Error');
       };
 
       html = '<div winch-img img-src="http://placehold.it/200x200" data-img-loaded="imgLoaded()"></div>';
@@ -714,7 +715,7 @@ describe('winchJS Unit Tests', function() {
       html = '<div winch-img img-url="imgFnParent()"></div>';
 
       $scope.imgFnParent = function() {
-        return 'http://placehold.it/200x200?text=Dynamic'
+        return 'http://placehold.it/200x200?text=Dynamic';
       };
 
       element = compile(html, $scope);
@@ -750,7 +751,7 @@ describe('winchJS Unit Tests', function() {
       $scope.$digest();
 
       expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200?text=BadExpression');
-    })
+    });
   });
 
   describe('Scroll Trigger Directive', function() {
@@ -893,13 +894,12 @@ describe('winchJS Unit Tests', function() {
   });
 
   describe('winchify Filter', function() {
-    var $filter, winchify;
+    var $filter;
 
     beforeEach(module('winch'));
 
     beforeEach(inject(function($injector) {
       $filter = $injector.get('$filter');
-
     }));
 
     it('filter img tags', function() {
