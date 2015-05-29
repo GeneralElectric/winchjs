@@ -1,15 +1,13 @@
-/* jshint mocha: true*/
-/* global chai: false */
-/* global inject: false */
-/* global angular: false */
+/* jshint mocha: true */
+/* global chai: false, inject: false, angular: false, module: false, window: false, document: false */
 
 /**
- *
+ * Unit Tests for the WinchJS library
  */
-'use strict';
 var expect = chai.expect;
 
 describe('winchJS Unit Tests', function() {
+  'use strict';
   describe('State Factory', function() {
     var winchFactory;
 
@@ -311,12 +309,12 @@ describe('winchJS Unit Tests', function() {
     function addTestZone(element) {
       var tz = document.createElement('div');
       tz.id = 'test-zone';
-      window.document.body.appendChild(tz);
+      document.body.appendChild(tz);
       tz.appendChild(element);
     }
 
     function clearTestZone() {
-      var tz = window.document.getElementById('test-zone');
+      var tz = document.getElementById('test-zone');
       if (tz) {
         tz.parentNode.removeChild(tz);
       }
@@ -402,7 +400,7 @@ describe('winchJS Unit Tests', function() {
 
       expect($scope._scrollObjects[0].off).to.have.been.called();
       expect($scope._scrollObjects[1].off).to.have.been.called();
-    })
+    });
   });
 
   describe('Image Directive', function() {
@@ -637,7 +635,7 @@ describe('winchJS Unit Tests', function() {
       isolateScope.loadSelf();
       $scope.$digest();
 
-      expect(element.children()[0].classList.contains('test-load-class')).to.be.equal(true)
+      expect(element.children()[0].classList.contains('test-load-class')).to.be.equal(true);
     });
 
     it('should call imgLoaded callback if provided', function() {
@@ -693,7 +691,7 @@ describe('winchJS Unit Tests', function() {
 
       isolateScope.loadSelf = chai.spy(isolateScope.loadSelf);
       isolateScope.isVisible = function() {
-        return false
+        return false;
       };
 
       $scope.$broadcast('winch:validate');
@@ -702,7 +700,7 @@ describe('winchJS Unit Tests', function() {
       expect(mockwinchFactory.loadImage).to.not.have.been.called();
 
       isolateScope.isVisible = function() {
-        return true
+        return true;
       };
 
       $scope.$broadcast('winch:validate');
@@ -764,7 +762,7 @@ describe('winchJS Unit Tests', function() {
         return {
           triggerValidation: function() {
           }
-        }
+        };
       };
       Throttle = function() {
         return {
@@ -772,7 +770,7 @@ describe('winchJS Unit Tests', function() {
             var deferred = $q.defer();
             return deferred.promise;
           }
-        }
+        };
       };
       // Register services
       $provide.factory('winchFactory', winchFactory);
@@ -794,12 +792,12 @@ describe('winchJS Unit Tests', function() {
     function addTestZone(element) {
       var tz = document.createElement('div');
       tz.id = 'test-zone';
-      window.document.body.appendChild(tz);
+      document.body.appendChild(tz);
       tz.appendChild(element);
     }
 
     function clearTestZone() {
-      var tz = window.document.getElementById('test-zone');
+      var tz = document.getElementById('test-zone');
       if (tz) {
         tz.parentNode.removeChild(tz);
       }
@@ -931,7 +929,7 @@ describe('winchJS Unit Tests', function() {
 
     it('should handle ng-src', function() {
       expect($filter('winchify')('<img data-ng-src="http://foobar.com/image.png">')).to.be
-        .equal('<winch-img data-img-src="http://foobar.com/image.png"></winch-img>')
-    })
+        .equal('<winch-img data-img-src="http://foobar.com/image.png"></winch-img>');
+    });
   });
 });

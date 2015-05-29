@@ -524,7 +524,8 @@ angular.module('winch', [])
         var deferred = $q.defer();
 
         //Check if Delay is valid, if not default to 100ms
-        if (!(parseInt(delay, 10) > 0)) {
+        delay = parseInt(delay, 10);
+        if (delay <= 0) {
           delay = 100;
         }
 
