@@ -28,7 +28,8 @@
     "node": ">= 0.8.26"
   },
   "scripts": {
-    "test": "node node_modules/karma/bin/karma start karma.conf.js"
+    "test": "node node_modules/karma/bin/karma start karma.conf.js",
+    "travis": "node node_modules/karma/bin/karma start karma.conf.js --single-run"
   },
   "bugs": {
     "url": "https://github.com/GeneralElectric/winchjs/issues"
