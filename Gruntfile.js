@@ -2,6 +2,7 @@ module.exports = function(grunt) {
   'use strict';
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-jscs');
   grunt.initConfig({
     connect: {
@@ -29,10 +30,13 @@ module.exports = function(grunt) {
       options: {
         config: '.jscsrc'
       }
+    },
+    jshint: {
+      src: ['winch.js', 'winch.spec.js', 'Gruntfile.js', 'karma.conf.js']
     }
   });
   // Default task.
   grunt.registerTask('default', ['connect:winch']);
-  grunt.registerTask('hint', ['jscs']);
+  grunt.registerTask('hint', ['jscs', 'jshint']);
   grunt.registerTask('min', ['uglify:winch']);
 };
