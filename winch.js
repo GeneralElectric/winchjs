@@ -331,7 +331,7 @@ angular.module('winch', [])
           });
 
           //Register image to start loading process
-          scope.registerImg(0);
+          scope.registerImg(1);
         }
       };
     }])
