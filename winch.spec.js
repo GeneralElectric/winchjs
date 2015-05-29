@@ -560,6 +560,22 @@ describe('winchJS Unit Tests', function() {
       expect(element.children()[0].src).to.be.equal('http://placehold.it/200x200');
     });
 
+    it('should destroy self after loadSelf is called', function(done) {
+      element = compile(html, $scope);
+      isolateScope = element.isolateScope();
+
+      isolateScope.loadSelf();
+      $scope.$digest();
+
+      isolateScope.$on('$destroy',function(){
+        expect(true).to.be.true;
+        done();
+      });
+
+      $timeout.flush();
+
+    });
+
     it('should calculate isVisible', function() {
       var imageBox = {
         bottom: 200,
