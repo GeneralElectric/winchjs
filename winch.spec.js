@@ -486,6 +486,69 @@ describe('winchJS Unit Tests', function() {
       expect(mockwinchFactory.registerImg).to.have.been.called();
     });
 
+    it('should make five attempts to register before loading self', function() {
+      var status = false, url = '';
+      mockwinchFactory.registerImg = chai.spy(function() {
+        return status;
+      });
+
+      $scope.getUrl = function() {
+        return url;
+      };
+
+      html = angular.element('<div winch-img img-fn="getUrl()"></div>');
+
+      element = compile(html, $scope);
+      element.isolateScope().loadSelf = chai.spy(element.isolateScope().loadSelf);
+
+      //First Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(1);
+      $timeout.flush(999);
+      //100 MS not completed
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(1);
+      $timeout.flush();
+      //Second Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(2);
+      $timeout.flush();
+      //Third Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(3);
+      $timeout.flush();
+      //Forth Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(4);
+      $timeout.flush();
+      //Fifth Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(5);
+      expect(element.isolateScope().loadSelf).to.have.been.called.once();
+    });
+
+    it('should register after dynamic value resolves (before 5 attempts)', function() {
+      var status = false, url = '';
+      mockwinchFactory.registerImg = chai.spy(function() {
+        return status;
+      });
+
+      $scope.getUrl = function() {
+        return url;
+      };
+
+      html = angular.element('<div winch-img img-fn="getUrl()"></div>');
+
+      element = compile(html, $scope);
+      element.isolateScope().loadSelf = chai.spy(element.isolateScope().loadSelf);
+
+      //First Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(1);
+      $timeout.flush();
+      //Second Call
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(2);
+      url = 'http://placehold.it/200x200';
+      status = true;
+      $timeout.flush();
+      expect(mockwinchFactory.registerImg).to.have.been.called.exactly(3);
+      //No new delay timer should be allocated
+      $timeout.verifyNoPendingTasks();
+    });
+
     it('should load image on loadSelf()', function() {
       element = compile(html, $scope);
       isolateScope = element.isolateScope();
