@@ -1,4 +1,7 @@
 language: node_js
+addons:
+  code_climate:
+   repo_token: ed214a56aa5c00cf885bff11ad2ad64e4b249dc27f9cd93102365ed793e6f4b3
 node_js:
   - 0.12
 before_script:
@@ -6,3 +9,5 @@ before_script:
   - bower install
 script:
   - npm run travis
+after_script:
+  - codeclimate < coverage/**/lcov.info
