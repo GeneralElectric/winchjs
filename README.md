@@ -2,7 +2,7 @@
 
 This is a lazy image loader written for AngularJS.
 
-Current versions of angular supported are 1.0 to 1.3
+Current versions of angular supported are 1.0 to 1.3.  It should work with IE9+ and modern versions of other browsers.
 
 ## Usage ##
 When the window scrolls or triggers a validation event a check occurs. If an edge of an image is within 100 pixels of 
@@ -13,7 +13,7 @@ Basic Example:
 
 ```
 <div winch-master>
-<div winch-img="http://placehold.it/200x200></div>
+<div winch-img src="http://placehold.it/200x200></div>
 </div>
 
 ```
