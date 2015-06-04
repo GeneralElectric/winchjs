@@ -14,8 +14,19 @@ module.exports = function(config) {
       './node_modules/chai-spies/chai-spies.js',
       './bower_components/angular/angular.js',
       './bower_components/angular-mocks/angular-mocks.js',
-      './winch.js',
-      './winch.spec.js'
+      './files/winch.js',
+      './files/winch-factory.js',
+      './files/winch-filter.js',
+      './files/winch-img.js',
+      './files/winch-master.js',
+      './files/winch-scroll.js',
+      './files/winch-throttle.js',
+      './tests/winch-factory.spec.js',
+      './tests/winch-filter.spec.js',
+      './tests/winch-img.spec.js',
+      './tests/winch-master.spec.js',
+      './tests/winch-scroll.spec.js',
+      './tests/winch-throttle.spec.js'
     ],
 
     // list of files to exclude
@@ -29,7 +40,13 @@ module.exports = function(config) {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'winch.js': ['coverage']
+      './files/winch.js': ['coverage'],
+      './files/winch-factory.js': ['coverage'],
+      './files/winch-filter.js': ['coverage'],
+      './files/winch-img.js': ['coverage'],
+      './files/winch-master.js': ['coverage'],
+      './files/winch-scroll.js': ['coverage'],
+      './files/winch-throttle.js': ['coverage']
     },
 
     // optionally, configure the reporter

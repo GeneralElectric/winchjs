@@ -18,21 +18,29 @@ module.exports = function(grunt) {
       winch: {
         options: {
           sourceMap: true,
-          sourceMapName: 'winch.map'
+          sourceMapName: 'dist/winch.map'
         },
         files: {
-          'winch.min.js': ['winch.js']
+          'dist/winch.min.js': [
+            'files/winch.js',
+            'files/winch-throttle.js',
+            'files/winch-factory.js',
+            'files/winch-filter.js',
+            'files/winch-master.js',
+            'files/winch-scroll.js',
+            'files/winch-img.js'
+          ]
         }
       }
     },
     jscs: {
-      src: ['winch.js', 'winch.spec.js', 'Gruntfile.js', 'karma.conf.js'],
+      src: ['files/*.js', 'tests/*.js', 'Gruntfile.js', 'karma.conf.js'],
       options: {
         config: '.jscsrc'
       }
     },
     jshint: {
-      src: ['winch.js', 'winch.spec.js', 'Gruntfile.js', 'karma.conf.js']
+      src: ['files/*.js', 'tests/*.js', 'Gruntfile.js', 'karma.conf.js']
     }
   });
   // Default task.
