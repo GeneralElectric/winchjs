@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
   'use strict';
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-jscs');
@@ -12,6 +13,20 @@ module.exports = function(grunt) {
           port: 8282,
           keepalive: true
         }
+      }
+    },
+    concat:{
+      dist:{
+        src: [
+          'files/winch.js',
+          'files/winch-throttle.js',
+          'files/winch-factory.js',
+          'files/winch-filter.js',
+          'files/winch-master.js',
+          'files/winch-scroll.js',
+          'files/winch-img.js'
+        ],
+        dest: 'dist/winch.js'
       }
     },
     uglify: {
