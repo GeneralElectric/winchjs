@@ -1,0 +1,21 @@
+{
+    // Enforcing Options
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "nonew": true,
+    "plusplus": true,
+    "quotmark": "single",
+    "unused": true,
+    "strict": false,
+    // Relaxing Options
+    "eqnull": true,
+    "expr": true,
+    // Environments
+    "browser": true,
+    "mocha": true,
+    "globals": {
+        "angular": false,
+        "expect": true
+    }
+}

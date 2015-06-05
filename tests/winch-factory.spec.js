@@ -1,6 +1,3 @@
-/* jshint mocha: true */
-/* global chai: false, inject: false, angular: false, module: false, window: false, document: false */
-
 /**
  * Unit Tests for the WinchJS State Factory
  */

@@ -55,7 +55,10 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      src: ['files/*.js', 'tests/*.js', 'Gruntfile.js', 'karma.conf.js']
+      src: ['files/*.js', 'tests/*.js', 'Gruntfile.js', 'karma.conf.js'],
+      options: {
+        jshintrc: '.jshintrc'
+      }
     }
   });
   // Default task.
