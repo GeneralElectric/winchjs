@@ -7,10 +7,7 @@
     "plusplus": true,
     "quotmark": "single",
     "unused": true,
-    "strict": false,
-    // Relaxing Options
-    "eqnull": true,
-    "expr": true,
+
     // Environments
     "browser": true,
     "mocha": true,
