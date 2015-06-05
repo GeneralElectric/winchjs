@@ -1,5 +1,5 @@
 languages:
   JavaScript: true
 exclude_paths:
-  - "example/"
-  - "dist/"
+- "example/"
+- "dist/"
