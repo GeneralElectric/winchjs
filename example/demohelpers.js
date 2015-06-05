@@ -9,11 +9,11 @@ angular.module('DemoHelper', ['winch'])
         var translateEl = angular.element($window.document.querySelector('#translate-el'));
         scope.transUp = function() {
           console.log('Scroll Up');
-          translateEl.css(ts.translateCSS(0, -500))
+          translateEl.css(ts.translateCSS(0, -500));
         };
         scope.transDown = function() {
           console.log('Scroll Down');
-          translateEl.css(ts.translateCSS(0, 500))
+          translateEl.css(ts.translateCSS(0, 500));
         };
       }
     };
@@ -35,9 +35,9 @@ angular.module('DemoHelper', ['winch'])
             )(angular.element(elem[0].querySelector('.content-scroll')).scope())
           );
           angular.element(elem[0].querySelector('.content-scroll')).scope().checkPortal();
-        }
+        };
       }
-    }
+    };
   }])
   .directive('testFilter', ['$filter', '$compile', function($filter, $compile) {
     return {
@@ -59,14 +59,14 @@ angular.module('DemoHelper', ['winch'])
         );
         angular.element(elem[0].querySelector('.content-scroll')).scope().checkPortal();
       }
-    }
+    };
   }])
   .directive('triggerValidation', [function() {
     return {
       link: function(scope) {
         scope.triggerValidation = function() {
           scope.$broadcast('winch:validation');
-        }
+        };
       }
     };
   }])
@@ -75,14 +75,14 @@ angular.module('DemoHelper', ['winch'])
       link: function(scope){
         scope.getUrl = function(val){
           if(val){
-            return 'http://placehold.it/350x150&text=' + val
+            return 'http://placehold.it/350x150&text=' + val;
           }else{
             return 'http://placehold.it/350x150&text=' + new Date().getTime();
           }
         };
-        scope.getUrlExp = 'http://placehold.it/350x150&text=expression'
+        scope.getUrlExp = 'http://placehold.it/350x150&text=expression';
       }
-    }
+    };
   }])
   .service('translateService', function() {
     var currentPositionX = 0,
